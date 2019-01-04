@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<!--
+	Author:		Bill Sun
+	Page Name:	index.html
+	Course:		PROG1800 
+	Due Date:	
+	Assignment:	Assignment 4
+	
+	Revision History:
+		
+-->
+<html lang="en">
+	<link rel="stylesheet" type="text/css" href="stylesheet.css">
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="crossorigin="anonymous"></script>
+	<script src="javascript.js"></script>
+<head>
+	<meta charset="utf-8">
+	<title>PROG1800 - Assignment 4</title>
+</head>
+<body>
+	<header>
+		<h3>Assignment 4 - Online Store</h3>
+		<hr>
+	</header>
+	<main>
+		<p>Welcome to Bill's online store where you can order model kits for various tanks and airplanes! Don't forget to fill out your information on your way out!</p>
+		<form action="submit.php" method="POST" onsubmit="return continueOrNot()">
+			<div id="accordion">
+				<h3>Model Kits - Tanks in 1/35 scale</h3>
+					<div>
+						<table>
+							<tr>
+								<th>British Army Centurion Mk.10</th>
+								<th>British Army Centurion AVRE 165 (Gulf War)</th>
+								<th>United States Army Corps M4A3E8 Sherman</th>
+								<th>Soviet Red Army T-34/85 (1945)</th>
+							</tr>
+							<tr>
+								<td><img src="./images/centmk10.jpg"></td>
+								<td><img src="./images/centAVRE.jpg"></td>
+								<td><img src="./images/m4firefly.jpg"></td>
+								<td><img src="./images/t3485.jpg"></td>
+							</tr>
+							<tr>
+								<td>Cost: $55.95</td>
+								<td>Cost: $150.00</td>
+								<td>Cost: $35.50</td>
+								<td>Cost: $44.95</td>
+							</tr>
+							<tr>
+								<td><input type="number" min="0" step="1" id="centMk10" name="centMk10" style="width: 60px; margin-right: 20px" value="0"><input type="button" value="Add To Cart" onclick="addToCart()"></td>
+								<td><input type="number" min="0" step="1" id="centAVRE" name="centAVRE" style="width: 60px; margin-right: 20px" value="0"><input type="button" value="Add To Cart" onclick="addToCart()"></td>
+								<td><input type="number" min="0" step="1" id="M4A3E8" name="M4A3E8" style="width: 60px; margin-right: 20px" value="0"><input type="button" value="Add To Cart" onclick="addToCart()"></td>
+								<td><input type="number" min="0" step="1" id="t3485" name="t3485" style="width: 60px; margin-right: 20px" value="0"><input type="button" value="Add To Cart" onclick="addToCart()"></td>
+							</tr>
+						</table>
+					</div>
+				<h3>Model Kits - Planes in 1/32 scale</h3>
+					<div>
+						<table>
+							<tr>
+								<th>Royal Air Force Supermarine Spitfire Mk. IX</th>
+								<th>United States Air Force North American P-51D Mustang</th>
+								<th>Luftwaffe Messerschmitt Bf 109 G-6</th>
+								<th>Soviet Air Force Yakovlev Yak-3</th>
+							</tr>
+							<tr>
+								<td><img src="./images/spitfire.jpg"></td>
+								<td><img src="./images/p51mustang.jpg"></td>
+								<td><img src="./images/bf109g6.jpg"></td>
+								<td><img src="./images/yak3.jpg"></td>
+							</tr>
+							<tr>
+								<td>Cost: $75.95</td>
+								<td>Cost: $66.50</td>
+								<td>Cost: $70.49</td>
+								<td>Cost: $60.95</td>
+							</tr>
+							<tr>
+								<td><input type="number" min="0" step="1" id="spitfire" name="spitfire" style="width: 60px; margin-right: 20px" value="0"><input type="button" value="Add To Cart" onclick="addToCart()"></td>
+								<td><input type="number" min="0" step="1" id="p51mustang" name="p51mustang" style="width: 60px; margin-right: 20px" value="0"><input type="button" value="Add To Cart" onclick="addToCart()"></td>
+								<td><input type="number" min="0" step="1" id="bf109g6" name="bf109g6" style="width: 60px; margin-right: 20px" value="0"><input type="button" value="Add To Cart" onclick="addToCart()"></td>
+								<td><input type="number" min="0" step="1" id="yak3" name="yak3" style="width: 60px; margin-right: 20px" value="0"><input type="button" value="Add To Cart" onclick="addToCart()"></td>
+							</tr>
+						</table>
+					</div>
+				<h3>Cart</h3>
+					<div id="cartTab">
+						<table>
+							<tr>
+								<td style="width: 600px"><span id="modelKitHeader">Your cart is empty.</span></td>
+								<td style="width: 100px"><span id="modelKitCount"></span></td>
+								<td style="width: 100px"><span id="modelKitPrice"></span></td>
+							</tr>
+							<tr>
+								<td style="width: 600px"><span id="modelName"></span></td>
+								<td style="width: 100px"><span id="modelCount"></span></td>
+								<td style="width: 100px"><span id="modelPrice"></span></td>
+							</tr>
+							<tr>
+								<td colspan="3"><span><hr style="width: 100%"></span></td>
+							</tr>
+							<tr>
+								<td style="width: 600px"><span></span></td>
+								<td style="width: 100px"><span>Total ($):</span></td>
+								<td style="width: 100px"><span id="customerTotal">N/A</span></td>
+							</tr>
+						</table>	
+					</div>
+				<h3>Customer Information</h3>
+					<div>
+						<table id="customerInfo">
+							<tr>
+								<td>First Name*</td>
+								<td>Last Name*</td>
+							</tr>
+							<tr>
+								<td><input type="text" id="customerFirstName" name="customerFirstName" style="width: 97%"></td>
+								<td><input type="text" id="customerLastName" name="customerLastName"></td>
+							</tr>								
+							<tr>
+								<td>Phone Number*</td>
+								<td>Extension</td>
+							</tr>
+							<tr>
+								<td><input type="text" id="phoneNumber" name="phoneNumber" style="width: 97%"></td>
+								<td><input type="text" id="phoneExtension" name="phoneExtension" style="width: 30%"></td>
+							</tr>
+							<tr>
+								<td>Address*</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td colspan="2"><input type="text" id="address" name="address"></td>
+							</tr>
+								<tr>
+								<td>City*</td>
+								<td>Province*</td>
+							</tr>
+							<tr>
+								<td><input type="text" id="city" name="city" style="width: 97%"></td>
+								<td>
+									<select name="province" id="province" style="width: 100%; height: 1.6em">
+										<option value="default">Please select a province</option>
+										<option value="Alberta">Alberta</option>
+										<option value="British Columbia">British Columbia</option>
+										<option value="Manitoba">Manitoba</option>
+										<option value="New Brunswick">New Brunswick</option>
+										<option value="Newfoundland And Labrador">Newfoundland and Labrador</option>
+										<option value="Northwest Territories">Northwest Territories</option>
+										<option value="Nova Scotia">Nova Scotia</option>
+										<option value="Nunavut">Nunavut</option>
+										<option value="Ontario">Ontario</option>
+										<option value="Prince Edward Island">Prince Edward Island</option>
+										<option value="Quebec">Quebec</option>
+										<option value="Saskatchewan">Saskatchewan</option>
+										<option value="Yukon">Yukon</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>Postal Code*</td>
+							</tr>
+							<tr>
+								<td><input type="text" id="postalCode" name="postalCode" style="width: 97%"></td>
+							</tr>
+						</table>
+						<p style="font-size: .8em">Note: all fields marked with an asterisk (*) are required fields.</p>
+						<p id="errorMessages" style="font-size: .8em"></p>
+						<span><hr style="width: 95%"></span>
+						<table>
+							<tr>
+								<td width="70%">Payment Method:</td>
+								<td rowspan="2"><input type="submit" id="buttonPlaceOrder" value="Place Order" onclick="checkIfFilled()" style="font-size: 20px"></td>
+							</tr>
+							<tr>
+								<td>
+									<input type="radio" name="pay" value="visa" checked="checked">Visa
+									<input type="radio" name="pay" value="cash order">Cash Order
+									<input type="radio" name="pay" value="interact">Interact
+								</td>
+							</tr>
+						</table>
+					</div>
+			</div>
+		</form>
+	</main>
+	<footer>
+		<br>
+		<hr>
+		<p style="text-align: right">PROG1800: Programming Dynamic Websites<br>Bill Sun<br>Assignment 4<br>Due: July 25<sup>th</sup>, 2018</p>
+	</footer>
+</body>
+</html>
